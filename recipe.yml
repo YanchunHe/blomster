@@ -1,13 +1,16 @@
-# -----------------------------------------
+# ------------------------------------------------------------
 #   Configuration for the tool 
-# -----------------------------------------
+# ------------------------------------------------------------
 blomster:
-  version: 0.1
-  source_root: /nird/datalake/NS16000B/blomster
+  version     : 0.1
+  source_root : /nird/datalake/NS16000B/blomster
+  work_root   : /scratch/yanchun/blomster
+  # overwrite cached climatologies and time series, True/False
+  overwrite   : True
 
-# -----------------------------------------
+# ------------------------------------------------------------
 #   Configuration for the simulation
-# -----------------------------------------
+# ------------------------------------------------------------
 experiment:
   caseid      : n1850GHGGaxg.LM.nor30b27.002.20261016
   input_root  : /nird/datalake/NS9560K/noresm3/cases
@@ -15,12 +18,11 @@ experiment:
   year_start  : 0001
   year_end    : 0050
 
+# ------------------------------------------------------------
+#   Configuration for generated Jupyter Book
+# ------------------------------------------------------------
 jupyterbook:
   www_root    : /nird/datalake/NS9560K/www/diagnostics/blomster/yanchun
-
-workdir:
-  work_root   : /scratch/yanchun/blomster
-  overwrite   : False                             # logic switch to overwrite cached climatologies and time series
 
 # -----------------------------------------
 #   Configuration for required variables
@@ -32,12 +34,13 @@ variables:                        # required variables
 #       'idlagelvl',
 #       'uvellvl','vvellvl', # rotate first
       timeseries: []
-    hbgcy:
-      climo: ['co2fxd','co2fxu']
-      timeseries: ['co2fxd','co2fxu']
+#   hbgcy:
+#     climo: ['co2fxd','co2fxu']
+#     timeseries: ['co2fxd','co2fxu']
     hm:
       climo: ['sst','sss',
-        'mldb04']
+        'templvl','salnlvl']
+#       'mldb04'
       timeseries: ['sstga','sssga','tempga','salnga',
         'volgs','massgs',
         'masstr','heattr','salttr',
@@ -49,18 +52,18 @@ variables:                        # required variables
       climo: []
       timeseries: []
 
-  cice:
-    h:
-      climo: ['aice']
-      timeseries: []
-    h1:
-      climo: []
-      timeseries: []
+# cice:
+#   h:
+#     climo: ['aice']
+#     timeseries: []
+#   h1:
+#     climo: []
+#     timeseries: []
 
 
-# -----------------------------------------
+# ------------------------------------------------------------
 #   Jupyter notebooks for diagnostics
-# -----------------------------------------
+# ------------------------------------------------------------
 diagnostics:
   root: index
   chapters:
@@ -88,9 +91,9 @@ diagnostics:
     - file: HAMOCC/intro.ipynb
     - file: CICE/intro.ipynb
 
-# -----------------------------------------
+# ------------------------------------------------------------
 #   Model grid files
-# -----------------------------------------
+# ------------------------------------------------------------
 grids:
   tnx1v4:
     data_root: /nird/datalake/NS16000B/blomster/grids/tnx1v4
@@ -102,9 +105,9 @@ grids:
     mask_nino34: /nird/datalake/NS16000B/blomster/grids/tnx1v4/mask_nino34.nc
 
 
-# -----------------------------------------
+# ------------------------------------------------------------
 #   Observational datasets for benchmarking
-# -----------------------------------------
+# ------------------------------------------------------------
 datasets:
   WOA13v2:
     1deg:

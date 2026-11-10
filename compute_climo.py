@@ -13,21 +13,24 @@ from pyprojroot import here
 # Get project root
 root_path = Path(here())
 
+# read recipe.yml
 yaml=YAML()
 with open(root_path.joinpath('recipe.yml')) as f:
     cfg = yaml.load(f)
-    experiment = cfg["experiment"]
-    workdir = cfg["workdir"]
 
-    caseid = experiment["caseid"]
-    input_root = experiment["input_root"]
-    year_start = experiment["year_start"]
-    year_end = experiment["year_end"]
+    work_root = cfg["blomster"]["work_root"]
+    overwrite = cfg["blomster"]["overwrite"]
 
-    work_root = workdir["work_root"]
-    overwrite = workdir["overwrite"]
+    caseid = cfg["experiment"]["caseid"]
+    input_root = cfg["experiment"]["input_root"]
+    year_start = cfg["experiment"]["year_start"]
+    year_end = cfg["experiment"]["year_end"]
 
     variables = cfg["variables"]
+
+# make leading zeros
+yyyy1 = f"{year_start:04d}"
+yyyy2 = f"{year_end:04d}"
     
 # define the frequency mapping for each tag
 freq={"hy": "yearly", "hm": "monthly",
@@ -36,6 +39,7 @@ freq={"hy": "yearly", "hm": "monthly",
 realm = {
     "blom": "ocn",
     "cice": "ice",
+    "micom": "ocn",
 }
 
 # Save generated climatology information to a YAML file
@@ -81,10 +85,19 @@ for model, tags in variables.items():       # model: [blom, cice]
             continue
         print("----------------------------------")
         print(f"Process: {model}, {tag}, {climo}")
+
+        # test model tag, blom or micom
+        mdl_nm = model
+        if model == 'blom':
+            data_path = Path(input_root).joinpath(f"{caseid}/{realm[model]}/hist")
+            file_pattern = f"{caseid}.blom.{tag}_{yyyy1}*.nc"
+            if not any(data_path.glob(file_pattern)):
+                file_pattern = f"{caseid}.micom.{tag}_{yyyy1}*.nc"
+                mdl_nm = 'micom'
         # ncclimo arguments
         args = [
             "nco/ncclimo",
-            "-m", model,
+            "-m", mdl_nm,
             "-h", tag,
             f"--clm_md={freq[tag]}",
             "-c", cfg['experiment']['caseid'],
@@ -94,7 +107,7 @@ for model, tags in variables.items():       # model: [blom, cice]
             "-e", str(year_end),
             "-v", ",".join(climo),
             "-p", "background",
-            "-j", "12"              
+            "-j", "6"              
         ]
 
         if overwrite is True:
@@ -119,8 +132,6 @@ for model, tags in variables.items():       # model: [blom, cice]
             print("Skip computing existing climotologies..")
 
         # Monthly files (01 to 12)
-        yyyy1 = f"{year_start:04d}"
-        yyyy2 = f"{year_end:04d}"
         for i in range(1, 13):
             mm = f"{i:02d}"
             mth = calendar.month_abbr[i].upper()

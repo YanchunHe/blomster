@@ -1,6 +1,8 @@
 #!/usr/bin/env -S -i bash
 set -e
 
+user=$(whoami)
+
 # activate conda
 for conda_sh in \
   "/conda/miniconda3/etc/profile.d/conda.sh" \
@@ -20,7 +22,6 @@ year_end=$(yq -r '.experiment.year_end' recipe.yml)
 www_root=$(yq -r '.jupyterbook.www_root' recipe.yml)
 work_root=$(yq -r '.workdir.work_root' recipe.yml)
 project=$(echo $www_root |grep -oP 'NS\d+K' |tr '[:upper:]' '[:lower:]')
-user=$(echo $work_root |cut -d/ -f3)
 if echo $www_root | grep 'datalake' >/dev/null 2>&1 ; then
   dataservice='datalake'
 else

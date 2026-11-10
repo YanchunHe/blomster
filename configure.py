@@ -48,7 +48,6 @@ settings = {}
 settings = {
     "blomster": cfg["blomster"],
     "experiment": cfg["experiment"],
-    "workdir": cfg["workdir"],
     "jupyterbook": cfg["jupyterbook"],
     "grids": cfg["grids"],
     "datasets": cfg["datasets"]
