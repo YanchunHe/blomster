@@ -35,7 +35,9 @@ def load(grid_file, grid_type='p'):
     return lat, lon, depth, mask, clat_new, clon_new
 
 def corners_to_vertices(c):
+    import numpy as np
     """(nv=4, y, x) cell corners [SW, SE, NE, NW] -> (y+1, x+1) grid vertices."""
+    ny, nx = c.shape
     v = np.empty((ny + 1, nx + 1), dtype=c.dtype)
     v[:-1, :-1] = c[0]        # SW corner of every cell
     v[:-1, -1] = c[1][:, -1]  # SE corner of the easternmost column
