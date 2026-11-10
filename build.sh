@@ -36,7 +36,7 @@ python configure.py
 python compute_climo.py
 
 # build the book
-#jupyter-book clean notebooks --all
+jupyter-book clean notebooks --all
 jupyter-book build -qq -n notebooks
 
 # Backup configs 

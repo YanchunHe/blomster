@@ -12,11 +12,12 @@ blomster:
 #   Configuration for the simulation
 # ------------------------------------------------------------
 experiment:
-  caseid      : n1850GHGGaxg.LM.nor30b27.002.20261016
-  input_root  : /nird/datalake/NS9560K/noresm3/cases
+
+  caseid      : N1850frc2_f09_tn14_20191012
+  input_root  : /nird/datalake/NS9560K/noresm/cases
   grid_label  : tnx1v4
-  year_start  : 0001
-  year_end    : 0050
+  year_start  : 1421
+  year_end    : 1450
 
 # ------------------------------------------------------------
 #   Configuration for generated Jupyter Book
@@ -104,6 +105,14 @@ grids:
     mask_RECCAP2_file: /nird/datalake/NS16000B/blomster/grids/tnx1v4/RECCAP2_region_masks_all_v20221025_tnx1v4.nc
     mask_nino3: /nird/datalake/NS16000B/blomster/grids/tnx1v4/mask_nino3.nc
     mask_nino34: /nird/datalake/NS16000B/blomster/grids/tnx1v4/mask_nino34.nc
+  tnx025v4:
+    data_root: /nird/datalake/NS16000B/blomster/grids/tnx025v4
+    grid_file: /nird/datalake/NS16000B/blomster/grids/tnx025v4/grid.nc
+    region_file: /nird/datalake/NS16000B/blomster/grids/tnx025v4/regions.nc
+    section_file: /nird/datalake/NS16000B/blomster/grids/tnx025v4/section_index.dat
+    mask_RECCAP2_file: /nird/datalake/NS16000B/blomster/grids/tnx025v4/RECCAP2_region_masks_all_v20221025_tnx025v4.nc
+    mask_nino3: /nird/datalake/NS16000B/blomster/grids/tnx025v4/mask_nino3.nc
+    mask_nino34: /nird/datalake/NS16000B/blomster/grids/tnx025v4/mask_nino34.nc
 
 
 # ------------------------------------------------------------
